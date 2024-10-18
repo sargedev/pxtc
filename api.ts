@@ -32,7 +32,7 @@ class Lexer {
         this.advance();
     }
 
-    advance(): void {
+    private advance(): void {
         this.pos += 1;
         this.char = this.pos < this.text.length ? this.text[this.pos] : null;
     }
@@ -56,7 +56,7 @@ class Lexer {
         return tokens;
     }
 
-    makeNumber(): Token {
+    private makeNumber(): Token {
         let result = "";
         let decimals = 0;
 

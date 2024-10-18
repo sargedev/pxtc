@@ -8,3 +8,13 @@ const DIV = "DIV";
 const MOD = "MOD";
 const LPAREN = "LPAREN";
 const RPAREN = "RPAREN";
+
+const SINGLE_TOKENS: {[key: string]: string} = {
+    "+": PLUS,
+    "-": MINUS,
+    "*": MUL,
+    "/": DIV,
+    "%": MOD,
+    "(": LPAREN,
+    ")": RPAREN
+}

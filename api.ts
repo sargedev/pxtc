@@ -37,17 +37,37 @@ class Lexer {
         this.char = this.pos < this.text.length ? this.text[this.pos] : null;
     }
 
-    makeTokens() {
+    makeTokens(): Token[] {
         let tokens: Token[] = [];
         
         while (this.char !== null) {
             if (this.char === "\t" || this.char === " ") {
                 this.advance();
-            } else if (this.char === "+") {
-                tokens.push(new Token(PLUS));
+            } else if (SINGLE_TOKENS[this.char]) {
+                tokens.push(new Token(SINGLE_TOKENS[this.char]));
+                this.advance();
+            } else if (strings.digits.includes(this.char)) {
+                tokens.push(this.makeNumber());
+            } else {
+                // error
             }
         }
         
         return tokens;
+    }
+
+    makeNumber(): Token {
+        let result = "";
+        let decimals = 0;
+
+        while (this.char != null && (strings.digits + ".").includes(this.char)) {
+            if (this.char == ".") decimals += 1;
+            result += this.char;
+            this.advance();
+        }
+
+        if (decimals == 0) return new Token(INT, parseInt(result));
+        if (decimals == 1) return new Token(FLOAT, parseFloat(result));
+        return null; // error
     }
 }
